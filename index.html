@@ -21,7 +21,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
-    <title>HTML5 presentation</title>
+    <title>GNU Build System (aka Autotools)</title>
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Droid+Sans+Fallback" rel="stylesheet" type="text/css" />
     <style>
       body {
@@ -109,12 +109,12 @@
       }
  
       .slide .counter {
-        color: #999999;
+        color: #555;
         position: absolute;
         left: 20px;
         bottom: 20px;
         display: block;
-        font-size: 70%;
+        font-size: 100%;
       }
  
       .slide.title > .counter,
@@ -189,7 +189,7 @@
       }
       
       h2 {
-        font-family: 'Droid Sans';
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
         color: black;
         font-size: 120%;
         padding: 0;
@@ -201,10 +201,10 @@
       }
  
       section, footer {
-        font-family: 'Droid Sans';
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
         color: #3f3f3f;
         text-shadow: rgba(0, 0, 0, 0.2) 0 2px 5px;
-        margin: 100px 30px 0;
+        margin: 50px 30px 0;
         display: block;
         overflow: hidden;
       }
@@ -360,7 +360,7 @@
         -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
       }
       
-      .key { font-family: Arial; }
+      .key { font-family: Arial, 'Droid Sans Fallback'; }
       
       :not(header) > .key {
         margin: 0 5px;
@@ -415,7 +415,14 @@
       ul.bulleted {
         padding-left: 30px;
       }
-      
+
+      .Statement { color: #da0; }
+      .Special { color: #ff40ff; }
+      .Type { color: #00ff00; }
+      .Constant { color: #ff6060; }
+      .PreProc { color: #ff40ff; }
+      .Identifier { color: #0aa; }
+
     </style> 
     
   </head> 
@@ -425,35 +432,24 @@
       <div class="slides"> 
         <div class="slide"> 
           <section class="middle"> 
-            <h2>Slides template</h2> 
-            <p>Click here, Press <span class="key">&rarr;</span> key to advance.</p> 
-          </section> 
-        </div> 
-        
-        <div class="slide"> 
-          <section class="middle"> 
-            <h2> 
-              Attached Events
-            </h2> 
-            <ul> 
-              <li>[arrow keys] to go next and previous</li> 
-              <li>[mouse scroll wheel] to go next and previous</li> 
-              <li>[Ctrl or Command] + [+/-] to zoom in and out</li> 
-              <li>[touch gestures] for mobile devices</li> 
-            </ul> 
+            <header> 
+              <h2>GNU Build System (aka Autotools)</h2> 
+            </header> 
+            <p><span class="key">暱稱 &dollar;4</span> <a href="http://about.me/fourdollars">about me</a></p> 
+            <p><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/tw/">CC BY-SA 3.0</a></p>
           </section> 
         </div> 
  
         <div class="slide"> 
           <section class="middle"> 
             <h2> 
-              Options
+              功能選項
             </h2> 
             <ul> 
-              <li><input type="checkbox" id="toggle-size" /><label for="toggle-size"><span>Grow</span></label></li> 
-              <li><input type="checkbox" id="toggle-transitions" checked /><label for="toggle-transitions"><span>Transitions</span></label></li> 
-              <li><input type="checkbox" id="toggle-gradients" checked /><label for="toggle-gradients"><span>Gradients</span></label></li> 
-              <li><input type="checkbox" id="toggle-counter" checked /><label for="toggle-counter"><span>Slide numbers</span></label></li> 
+              <li><input type="checkbox" id="toggle-size" checked /><label for="toggle-size"><span>縮放頁面</span></label></li> 
+              <li><input type="checkbox" id="toggle-transitions" checked /><label for="toggle-transitions"><span>動態換頁</span></label></li> 
+              <li><input type="checkbox" id="toggle-gradients" checked /><label for="toggle-gradients"><span>漸層背景</span></label></li> 
+              <li><input type="checkbox" id="toggle-counter" checked /><label for="toggle-counter"><span>頁面編號</span></label></li> 
             </ul> 
           </section> 
         </div> 
@@ -461,28 +457,28 @@
         <div class="slide"> 
           <section> 
             <header> 
-              <h2>Placeholder content</h2> 
+              <h2>第一隻 Hello World 的 C 程式</h2> 
             </header> 
-<pre>// some sample code
-&lt;canvas id="canvas" width="838" height="220"&gt;&lt;/canvas&gt;
- 
-&lt;script&gt;
-  var canvasContext = document.getElementById("canvas").<b>getContext</b>("2d");
-  canvasContext.<b>fillRect</b>(250, 25, 150, 100);
- 
-  canvasContext.<b>beginPath</b>();
-  canvasContext.<b>arc</b>(450, 110, 100, Math.PI * 1/2, Math.PI * 3/2);
-  canvasContext.<b>lineWidth</b> = 15;
-  canvasContext.<b>lineCap</b> = 'round';
-  canvasContext.<b>strokeStyle</b> = 'rgba(255, 127, 0, 0.5)';
-  canvasContext.<b>stroke</b>();
-&lt;/script&gt;
-</pre> 
-            <ul class="bulleted"> 
-              <li>point 1</li> 
-              <li>point 2</li> 
-              <li>point 3</li> 
-            </ul> 
+<pre>
+<span class="PreProc">#include </span><span class="Constant">&lt;stdio.h&gt;</span>
+
+<span class="Type">int</span> main(<span class="Type">int</span> argc, <span class="Type">char</span>* argv[])
+{
+    printf(<span class="Constant">&quot;Hello World!</span><span class="Special">\n</span><span class="Constant">&quot;</span>);
+    <span class="Statement">return</span> <span class="Constant">0</span>;
+}
+</pre>
+            <h2>使用 GCC (GNU Compiler Collection) 來編譯</h2>
+            <pre>$ gcc hello.c -o hello</pre>
+            <h2>使用 GNU Make 來協助編譯</h2>
+<pre>
+<span class="Identifier">hello:</span> hello.o
+<span class="Constant">    gcc -o hello hello.o</span>
+
+<span class="Identifier">hello.o:</span> hello.c
+<span class="Constant">    gcc -c hello.c</span>
+</pre>
+            <pre>$ make</pre>
           </section> 
         </div> 
  
@@ -875,6 +871,7 @@
             }
           });
         }
+        toggleSize();
       })();
     </script> 
  
