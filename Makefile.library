@@ -1,0 +1,26 @@
+SOURCES = hello_world.c
+HEADERS = hello_world.h
+CPPFLAGS += -fPIC
+PREFIX ?= /usr/local
+
+LIB = $(addsuffix .so,$(addprefix lib,$(patsubst %.c,%,$(firstword $(SOURCES)))))
+
+$(LIB): $(patsubst %.c,%.o, $(SOURCES))
+	$(CC) -shared -fPIC -o $@ $^
+
+$(SOURCES): $(HEADERS)
+
+clean:
+	$(RM) $(LIB) $(patsubst %.c,%.o, $(SOURCES))
+
+install: $(LIB) $(HEADERS)
+	mkdir -p $(DESTDIR)$(PREFIX)/lib
+	install $(LIB) $(DESTDIR)$(PREFIX)/lib
+	mkdir -p $(DESTDIR)$(PREFIX)/include
+	install $(HEADERS) $(DESTDIR)$(PREFIX)/include
+
+uninstall:
+	$(RM) $(DESTDIR)$(PREFIX)/lib/$(LIB)
+	$(RM) $(foreach header,$(HEADERS),$(addprefix $(DESTDIR)$(PREFIX)/include/, $(header)))
+
+.PHONY: clean uninstall
