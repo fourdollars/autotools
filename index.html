@@ -591,6 +591,113 @@
 
 <span class="Statement">.PHONY:</span> clean
 </pre>
+<pre>
+<span class="Identifier">%.o :</span> <span class="Identifier">%</span>.c
+<span class="Constant">    </span><span class="Identifier">$(CC)</span><span class="Constant"> -Wall -c </span><span class="Identifier">$(CFLAGS)</span><span class="Constant"> </span><span class="Identifier">$(CPPFLAGS)</span><span class="Constant"> -o </span><span class="Identifier">$@</span><span class="Constant"> </span><span class="Identifier">$&lt;</span><span class="Constant"> </span>
+
+<span class="Identifier">%.o :</span> CFLAGS = -g
+</pre>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2><span class="green">Makefile</span> 的變數介紹</h2> 
+            </header> 
+<pre>
+<span class="Identifier">objects </span>= program.o foo.o utils.o
+<span class="Identifier">program :</span> <span class="Identifier">$(objects)</span>
+<span class="Constant">    cc -o program </span><span class="Identifier">$(objects)</span>
+
+<span class="Identifier">$(objects) :</span> defs.h
+</pre>
+<pre>
+<span class="Identifier">foo </span>= <span class="Identifier">$(bar)</span>
+<span class="Identifier">bar </span>= <span class="Identifier">$(ugh)</span>
+<span class="Identifier">ugh </span>= Huh?
+<span class="Identifier">all:</span>;@echo <span class="Identifier">$(foo)</span>
+</pre>
+<pre>
+<span class="Identifier">x </span>:= foo
+<span class="Identifier">y </span>:= <span class="Identifier">$(x)</span> bar
+<span class="Identifier">x </span>:= later
+<span class="Identifier">xy:</span>;@echo <span class="Identifier">$(x)</span> <span class="Identifier">$(y)</span>
+</pre>
+<pre>
+<span class="Identifier">a </span>:= foo
+<span class="Identifier">a </span>?= bar
+<span class="Identifier">b </span>:= <span class="Identifier">$(a)</span>
+<span class="Identifier">ab:</span>;@echo <span class="Identifier">$(a)</span> <span class="Identifier">$(b)</span>
+</pre>
+<pre>
+<span class="Identifier">objects </span>= main.o foo.o bar.o utils.o
+<span class="Identifier">objects </span>+= another.o
+</pre>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2><span class="green">Makefile</span> 的函式介紹</h2> 
+            </header> 
+<pre>
+<span class="Identifier">files </span>:= <span class="Identifier">$(</span><span class="Statement">wildcard</span><span class="Identifier"> *.c *.html)</span>
+<span class="Identifier">files:</span>;@echo <span class="Identifier">$(files)</span>
+</pre>
+<pre>
+<span class="Identifier">subst </span>:= <span class="Identifier">$(</span><span class="Statement">subst</span><span class="Identifier"> html,HTML,$(files))</span>
+<span class="Identifier">subst:</span>;@echo <span class="Identifier">$(</span><span class="Statement">subst</span><span class="Identifier">)</span>
+</pre>
+<pre>
+<span class="Identifier">patsubst </span>:= <span class="Identifier">$(</span><span class="Statement">patsubst</span><span class="Identifier"> %.c,%.o,$(files))</span>
+<span class="Identifier">patsubst:</span>;@echo <span class="Identifier">$(</span><span class="Statement">patsubst</span><span class="Identifier">)</span>
+</pre>
+<pre>
+<span class="Identifier">list </span>:= <span class="Constant">'a   b   c   '</span>
+<span class="Identifier">list:</span>;@echo <span class="Identifier">$(list)</span>
+<span class="Identifier">strip </span>:= <span class="Identifier">$(</span><span class="Statement">strip</span><span class="Identifier"> $(list))</span>
+<span class="Identifier">strip:</span>;@echo <span class="Identifier">$(</span><span class="Statement">strip</span><span class="Identifier">)</span>
+</pre>
+<pre>
+<span class="Identifier">suffix </span>:= <span class="Identifier">$(</span><span class="Statement">suffix</span><span class="Identifier"> $(files))</span>
+<span class="Identifier">suffix:</span>;@echo <span class="Identifier">$(</span><span class="Statement">suffix</span><span class="Identifier">)</span>
+</pre>
+<pre>
+<span class="Identifier">$(</span><span class="Statement">error</span><span class="Identifier">   This is error.)</span>
+<span class="Identifier">$(</span><span class="Statement">warning</span><span class="Identifier"> This is warning.)</span>
+<span class="Identifier">$(</span><span class="Statement">info</span><span class="Identifier">    This is info.)</span>
+</pre>
+          </section> 
+        </div> 
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2><span class="green">Makefile</span> 的條件判斷</h2> 
+            </header> 
+<pre>
+<span class="PreProc">ifeq</span> (<span class="Identifier">$(CC)</span>,gcc)
+    CPPFLAGS = -Wall
+    CFLAGS = -g
+<span class="PreProc">endif</span>
+</pre>
+<pre>
+<span class="PreProc">ifdef</span> DEBUG
+    CPPFLAGS = -Wall
+    CFLAGS = -g
+<span class="PreProc">endif</span>
+</pre>
+<pre>
+<span class="Identifier">list_files </span>= <span class="Identifier">$(</span><span class="Statement">foreach</span><span class="Identifier"> item,$(1),$(</span><span class="Statement">info</span><span class="Identifier"> $(item)))</span>
+<span class="Identifier">info_msg </span>= <span class="Identifier">$(</span><span class="Statement">info</span><span class="Identifier"> $(1))</span>
+
+<span class="Identifier">$(</span><span class="Statement">if</span><span class="Identifier"> $(</span><span class="Statement">findstring</span><span class="Identifier"> make.html, $(files)), \</span>
+<span class="Identifier">    $(</span><span class="Statement">call</span><span class="Identifier"> list_files, $(files)), \</span>
+<span class="Identifier">    $(</span><span class="Statement">call</span><span class="Identifier"> info_msg, </span><span class="Constant">'I can not find make.html'</span><span class="Identifier">) \</span>
+<span class="Identifier">)</span>
+
+</pre>
             <dl>
               <dt>線上文件</dt>
               <dd><a href="make.html">GNU Make Manual</a></dd>
