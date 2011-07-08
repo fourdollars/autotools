@@ -505,6 +505,7 @@
       .Constant { color: #ff6060; }
       .PreProc { color: #ff40ff; }
       .Identifier { color: #0aa; }
+      .Comment { color: #8080ff; }
 
     </style> 
     
@@ -671,6 +672,7 @@
 </pre>
           </section> 
         </div> 
+
         <div class="slide"> 
           <section> 
             <header> 
@@ -702,6 +704,59 @@
               <dt>線上文件</dt>
               <dd><a href="make.html">GNU Make Manual</a></dd>
             </dl>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+            <h2>簡單的 <span class="green">Library</span> 函式庫</h2>
+            </header> 
+<pre>
+<span class="Comment">/*</span><span class="Comment"> hello_world.h </span><span class="Comment">*/</span>
+<span class="PreProc">#ifndef __HELLO_WORLD__</span>
+<span class="PreProc">#define __HELLO_WORLD__</span>
+<span class="PreProc">#ifdef __cplusplus</span>
+<span class="Type">extern</span> <span class="Constant">&quot;C&quot;</span>
+{
+<span class="PreProc">#endif</span>
+    <span class="Comment">/*</span><span class="Comment">* </span>
+<span class="Comment">     * @brief This is a hello world library.</span>
+<span class="Comment">     * </span>
+<span class="Comment">     * @return The reture value of printf.</span>
+<span class="Comment">     </span><span class="Comment">*/</span>
+    <span class="Type">extern</span> <span class="Type">int</span> hello_world(<span class="Type">void</span>);
+<span class="PreProc">#ifdef __cplusplus</span>
+}
+<span class="PreProc">#endif</span>
+<span class="PreProc">#endif</span>
+</pre>
+<pre>
+<span class="Comment">/*</span><span class="Comment"> hello_world.c </span><span class="Comment">*/</span>
+<span class="PreProc">#include </span><span class="Constant">&lt;stdio.h&gt;</span>
+<span class="PreProc">#include </span><span class="Constant">&quot;hello_world.h&quot;</span>
+
+<span class="Type">int</span> hello_world(<span class="Type">void</span>)
+{
+    <span class="Statement">return</span> printf(<span class="Constant">&quot;Hello World!</span><span class="Special">\n</span><span class="Constant">&quot;</span>);
+}
+</pre>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2>使用 <span class="green">GNU Make</span> 來協助編譯以及安裝</h2> 
+            </header> 
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2><span class="green">範本</span></h2> 
+            </header> 
           </section> 
         </div> 
  
