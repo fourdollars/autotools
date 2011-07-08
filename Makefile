@@ -1,5 +1,6 @@
 hello: hello.o
-	gcc -o hello hello.o
 
-hello.o: hello.c
-	gcc -c hello.c
+clean: ; $(RM) hello hello.o
+	@echo done
+
+.PHONY: clean

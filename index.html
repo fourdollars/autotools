@@ -267,12 +267,12 @@
         font-family: 'Droid Sans Mono', Courier;
         font-size: 80%;
         padding: 10px 20px;
-        background: rgba(255, 0, 0, 0.05);
+        background: rgba(0, 0, 255, 0.05);
         -webkit-border-radius: 8px;
         -khtml-border-radius: 8px;
         -moz-border-radius: 8px;
         border-radius: 8px;
-        border: 1px solid rgba(255, 0, 0, 0.2);
+        border: 1px solid rgba(0, 0, 0, 0.2);
       }
       
       pre select {
@@ -337,9 +337,94 @@
         border-radius: 8px;
         border: 1px solid rgba(0, 0, 0, 0.2);
       }
+
+      span.gray {
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
+        color: black;
+        display: inline-block;
+        padding: 6px 10px 3px 10px;
+        text-shadow: none;
+        -moz-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: lightgray;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+      }
+
+      span.yellow {
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
+        color: black;
+        display: inline-block;
+        padding: 6px 10px 3px 10px;
+        text-shadow: none;
+        -moz-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: lightyellow;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+      }
+
+      span.green {
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
+        color: black;
+        display: inline-block;
+        padding: 6px 10px 3px 10px;
+        text-shadow: none;
+        -moz-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: lightgreen;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+      }
+
+      span.blue {
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
+        color: black;
+        display: inline-block;
+        padding: 6px 10px 3px 10px;
+        text-shadow: none;
+        -moz-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: lightblue;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+      }
+
+      span.pink {
+        font-family: 'Droid Sans', 'Droid Sans Fallback';
+        color: black;
+        display: inline-block;
+        padding: 6px 10px 3px 10px;
+        text-shadow: none;
+        -moz-border-radius: 10px;
+        -khtml-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: pink;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+        -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
+      }
       
       .key {
-        font-family: 'Droid Sans';
+        font-family: 'Droid Sans', Arial, 'Droid Sans Fallback';
         color: black;
         display: inline-block;
         padding: 6px 10px 3px 10px;
@@ -359,8 +444,6 @@
         -moz-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
         -o-box-shadow: rgba(0, 0, 0, 0.1) 0 2px 5px;
       }
-      
-      .key { font-family: Arial, 'Droid Sans Fallback'; }
       
       :not(header) > .key {
         margin: 0 5px;
@@ -435,7 +518,7 @@
             <header> 
               <h2>GNU Build System (aka Autotools)</h2> 
             </header> 
-            <p><span class="key">暱稱 &dollar;4</span> <a href="http://about.me/fourdollars">about me</a></p> 
+            <p><span class="key">暱稱 <a href="http://about.me/fourdollars">&dollar;4</a></span></p> 
             <p><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/tw/">CC BY-SA 3.0</a></p>
           </section> 
         </div> 
@@ -457,7 +540,7 @@
         <div class="slide"> 
           <section> 
             <header> 
-              <h2>第一隻 Hello World 的 C 程式</h2> 
+              <h2>第一隻 <span class="green">Hello World</span> 的 C 程式</h2> 
             </header> 
 <pre>
 <span class="PreProc">#include </span><span class="Constant">&lt;stdio.h&gt;</span>
@@ -468,9 +551,9 @@
     <span class="Statement">return</span> <span class="Constant">0</span>;
 }
 </pre>
-            <h2>使用 GCC (GNU Compiler Collection) 來編譯</h2>
+            <h2>使用 <span class="yellow">GCC (GNU Compiler Collection)</span> 來編譯</h2>
             <pre>$ gcc hello.c -o hello</pre>
-            <h2>使用 GNU Make 來協助編譯</h2>
+            <h2>使用 <span class="yellow">GNU Make</span> 來協助編譯</h2>
 <pre>
 <span class="Identifier">hello:</span> hello.o
 <span class="Constant">    gcc -o hello hello.o</span>
@@ -479,6 +562,39 @@
 <span class="Constant">    gcc -c hello.c</span>
 </pre>
             <pre>$ make</pre>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2><span class="green">Makefile</span> 的規則介紹</h2> 
+            </header> 
+<pre>
+<span class="Identifier">target:</span> dependencies ... ;<span class="Constant"> command</span>
+<span class="Constant">    commands</span>
+<span class="Constant">    ...</span>
+</pre>
+<pre>
+<span class="Identifier">hello:</span> hello.o
+<span class="Constant">    gcc -o hello hello.o</span>
+
+<span class="Identifier">hello.o:</span> hello.c
+<span class="Constant">    gcc -c hello.c</span>
+</pre>
+假目標 <span class="key"><a href="make.html#Phony-Targets">.PHONY</a></span> 以及 潛規則 <span class="key"><a href="make.html#Implicit-Rules">Implicit Rules</a></span>
+<pre>
+<span class="Identifier">hello:</span> hello.o
+
+<span class="Identifier">clean:</span> ;<span class="Constant"> </span><span class="Identifier">$(RM)</span><span class="Constant"> hello hello.o</span>
+<span class="Special">    @</span><span class="Constant">echo done</span>
+
+<span class="Statement">.PHONY:</span> clean
+</pre>
+            <dl>
+              <dt>線上文件</dt>
+              <dd><a href="make.html">GNU Make Manual</a></dd>
+            </dl>
           </section> 
         </div> 
  
