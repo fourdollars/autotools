@@ -241,7 +241,7 @@
       }
       
       section.small {
-        font-size: 24px;
+        font-size: 14px;
       }
       
       section.small ul {
@@ -749,35 +749,79 @@
         <div class="slide"> 
           <section> 
             <header> 
+              <h2>使用 <span class="green">GCC (GNU Compiler Collection)</span> 來編譯</h2>
+            </header> 
+            <p>靜態函式庫 Static Library</p>
+<pre>
+$ gcc -c hello_world.c
+$ ar cr libhello_world.a hello_world.o
+</pre>
+            <p>動態函式庫 Shared Library</p>
+<pre>
+$ gcc -c -fPIC hello_world.c
+$ gcc -shared -fPIC -o libhello_world.so hello_world.o
+</pre>
+<pre>
+<span class="Comment">/*</span><span class="Comment"> main.c </span><span class="Comment">*/</span>
+<span class="PreProc">#include </span><span class="Constant">&lt;hello_world.h&gt;</span>
+<span class="Type">int</span> main(<span class="Type">int</span> argc, <span class="Type">char</span>* argv[]) { hello_world(); <span class="Statement">return</span> <span class="Constant">0</span>; }
+</pre>
+<pre>
+$ gcc -I. -c main.c
+$ gcc -static -o main main.o -L. -lhello_world
+$ ./main
+</pre>
+<pre>
+$ gcc -I. -c main.c
+$ gcc -o main main.o -L. -lhello_world
+$ LD_LIBRARY_PATH=. ./main
+</pre>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section class="small"> 
+            <header> 
               <h2>使用 <span class="green">GNU Make</span> 來協助編譯以及安裝</h2> 
             </header> 
 <pre>
 <span class="Identifier">SOURCES </span>= hello_world.c
 <span class="Identifier">HEADERS </span>= hello_world.h
 <span class="Identifier">CPPFLAGS </span>+= -fPIC
-
 <span class="Identifier">PREFIX </span>?= /usr/local
-<span class="Identifier">DESTDIR </span>?= <span class="Identifier">$(</span><span class="Statement">shell</span><span class="Identifier"> pwd)</span>
 
-<span class="Identifier">LIB </span>= <span class="Identifier">$(</span><span class="Statement">addsuffix</span><span class="Identifier"> .so,$(</span><span class="Statement">addprefix</span><span class="Identifier"> lib,$(</span><span class="Statement">patsubst</span><span class="Identifier"> %.c,%,$(</span><span class="Statement">firstword</span><span class="Identifier"> $(SOURCES)))))</span>
+<span class="Identifier">LIB </span>= <span class="Identifier">$(</span><span class="Statement">addprefix</span><span class="Identifier"> lib,$(</span><span class="Statement">patsubst</span><span class="Identifier"> %.c,%,$(</span><span class="Statement">firstword</span><span class="Identifier"> $(SOURCES))))</span>
+<span class="Identifier">SHARED </span>= <span class="Identifier">$(</span><span class="Statement">addsuffix</span><span class="Identifier"> .so,$(LIB))</span>
+<span class="Identifier">STATIC </span>= <span class="Identifier">$(</span><span class="Statement">addsuffix</span><span class="Identifier"> .a,$(LIB))</span>
+<span class="Identifier">OBJS </span>= <span class="Identifier">$(</span><span class="Statement">patsubst</span><span class="Identifier"> %.c,%.o, $(SOURCES))</span>
 
-<span class="Identifier">$(LIB):</span> <span class="Identifier">$(</span><span class="Statement">patsubst</span><span class="Identifier"> %.c,%.o, $(SOURCES))</span>
+<span class="Identifier">all:</span> <span class="Identifier">$(SHARED)</span> <span class="Identifier">$(STATIC)</span>
+
+<span class="Identifier">$(SHARED):</span> <span class="Identifier">$(OBJS)</span>
 <span class="Constant">    </span><span class="Identifier">$(CC)</span><span class="Constant"> -shared -fPIC -o </span><span class="Identifier">$@</span><span class="Constant"> </span><span class="Identifier">$^</span>
+
+<span class="Identifier">$(STATIC):</span> <span class="Identifier">$(OBJS)</span>
+<span class="Constant">    </span><span class="Identifier">$(AR)</span><span class="Constant"> cr </span><span class="Identifier">$@</span><span class="Constant"> </span><span class="Identifier">$^</span>
 
 <span class="Identifier">$(SOURCES):</span> <span class="Identifier">$(HEADERS)</span>
 
 <span class="Identifier">clean:</span>
-<span class="Constant">    </span><span class="Identifier">$(RM)</span><span class="Constant"> </span><span class="Identifier">$(LIB)</span><span class="Constant"> </span><span class="Identifier">$(</span><span class="Statement">patsubst</span><span class="Identifier"> %.c,%.o, $(SOURCES))</span>
+<span class="Constant">    </span><span class="Identifier">$(RM)</span><span class="Constant"> </span><span class="Identifier">$(SHARED)</span><span class="Constant"> </span><span class="Identifier">$(STATIC)</span><span class="Constant"> </span><span class="Identifier">$(OBJS)</span>
 
-<span class="Identifier">install:</span> <span class="Identifier">$(LIB)</span> <span class="Identifier">$(HEADERS)</span>
+<span class="Identifier">install:</span> <span class="Identifier">$(SHARED)</span> <span class="Identifier">$(STATIC)</span> <span class="Identifier">$(HEADERS)</span>
 <span class="Constant">    mkdir -p </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib</span>
-<span class="Constant">    install </span><span class="Identifier">$(LIB)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib</span>
+<span class="Constant">    install </span><span class="Identifier">$(SHARED)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib</span>
+<span class="Constant">    install </span><span class="Identifier">$(STATIC)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib</span>
 <span class="Constant">    mkdir -p </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/include</span>
 <span class="Constant">    install </span><span class="Identifier">$(HEADERS)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/include</span>
 
 <span class="Identifier">uninstall:</span>
-<span class="Constant">    </span><span class="Identifier">$(RM)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib/</span><span class="Identifier">$(LIB)</span>
+<span class="Constant">    </span><span class="Identifier">$(RM)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib/</span><span class="Identifier">$(SHARED)</span>
+<span class="Constant">    </span><span class="Identifier">$(RM)</span><span class="Constant"> </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib/</span><span class="Identifier">$(STATIC)</span>
 <span class="Constant">    </span><span class="Identifier">$(RM)</span><span class="Constant"> </span><span class="Identifier">$(</span><span class="Statement">foreach</span><span class="Identifier"> header,$(HEADERS),$(</span><span class="Statement">addprefix</span><span class="Identifier"> $(DESTDIR)$(PREFIX)/include/, $(header)))</span>
+<span class="Special">    -</span><span class="Constant">rmdir </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/lib/</span>
+<span class="Special">    -</span><span class="Constant">rmdir </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span><span class="Constant">/include/</span>
+<span class="Special">    -</span><span class="Constant">rmdir </span><span class="Identifier">$(DESTDIR)$(PREFIX)</span>
 
 <span class="Statement">.PHONY:</span> clean uninstall
 </pre>
