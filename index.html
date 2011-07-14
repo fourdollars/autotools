@@ -831,8 +831,39 @@ $ LD_LIBRARY_PATH=. ./main
         <div class="slide"> 
           <section> 
             <header> 
-              <h2><span class="green">範本</span></h2> 
+            <h2>使用 <span class="green">Autotools</span> 來協助編譯 <span class="yellow">Hello World</span></h2> 
             </header> 
+          <p>準備好 <span class="yellow">Makefile.am</span></p>
+<pre>
+<span class="Statement">bin_PROGRAMS </span>= hello
+<span class="Type">hello_SOURCES </span>= hello.c
+</pre>
+          <p>執行 <span class="yellow">autoscan</span> 產生 <span class="yellow">configuare.scan</span> 再修改成 <span class="yellow">configure.ac</span></p>
+<pre>
+AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
+         ￬                    ￬          ￬
+<span class="Identifier">AC_INIT</span><span class="Special">([</span>hello<span class="Special">],            </span> <span class="Special">[</span><span class="Constant">1.0</span><span class="Special">],</span>     <span class="Special">[</span>fourdollars@gmail.com<span class="Special">])</span>
+
+<span class="Identifier">AM_INIT_AUTOMAKE</span><span class="Special">([</span>foreign<span class="Special">])</span>
+</pre>
+          <p>執行 <span class="yellow">autoreconf -if</span> 產生 <span class="yellow">configure</span></p>
+<pre>
+$ ./configure
+$ make
+$ make install
+</pre>
+          </section> 
+        </div> 
+
+        <div class="slide"> 
+          <section> 
+            <header> 
+              <h2><span class="green">參考資料</span></h2> 
+            </header> 
+            <dl>
+              <dt>線上文件</dt>
+              <dd><a href="make.html">GNU Make Manual</a></dd>
+            </dl>
             <dl>
               <dt>電子書</dt>
               <dd><a href="http://www.advancedlinuxprogramming.com">Advanced Linux Programming</a></dd>
