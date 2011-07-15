@@ -751,12 +751,12 @@
             <header> 
               <h2>使用 <span class="green">GCC (GNU Compiler Collection)</span> 來編譯</h2>
             </header> 
-            <p>靜態函式庫 Static Library</p>
+            <p>靜態函式庫 <span class="yellow">Static</span> Library</p>
 <pre>
 $ gcc -c hello_world.c
 $ ar cr libhello_world.a hello_world.o
 </pre>
-            <p>動態函式庫 Shared Library</p>
+            <p>動態函式庫 <span class="yellow">Shared</span> Library</p>
 <pre>
 $ gcc -c -fPIC hello_world.c
 $ gcc -shared -fPIC -o libhello_world.so hello_world.o
