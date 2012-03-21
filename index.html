@@ -843,8 +843,10 @@ $ LD_LIBRARY_PATH=. ./main
 AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
          ￬                    ￬          ￬
 <span class="Identifier">AC_INIT</span><span class="Special">([</span>hello<span class="Special">],            </span> <span class="Special">[</span><span class="Constant">1.0</span><span class="Special">],</span>     <span class="Special">[</span>bugs@foo.bar<span class="Special">])</span>
-...
 <span class="Identifier">AM_INIT_AUTOMAKE</span><span class="Special">([</span>foreign<span class="Special">])</span>
+
+# Checks for programs.
+<span class="Identifier">AC_PROG_CC</span>
 </pre>
             <p>執行 <span class="yellow">autoreconf -if</span> 產生 <span class="yellow">configure</span></p>
 <pre>
@@ -874,6 +876,9 @@ AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
 ...
 <span class="Identifier">AM_INIT_AUTOMAKE</span><span class="Special">([</span>foreign<span class="Special">])</span>
 <span class="Identifier">LT_INIT</span>
+
+# Checks for programs.
+<span class="Identifier">AC_PROG_CC</span>
 </pre>
             <p>執行 <span class="yellow">autoreconf -if</span> 產生 <span class="yellow">configure</span></p>
 <pre>
