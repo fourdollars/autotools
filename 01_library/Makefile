@@ -32,7 +32,8 @@ install: $(SHARED) $(STATIC) $(HEADERS)
 uninstall:
 	$(RM) $(DESTDIR)$(PREFIX)/lib/$(SHARED)
 	$(RM) $(DESTDIR)$(PREFIX)/lib/$(STATIC)
-	$(RM) $(foreach header,$(HEADERS),$(addprefix $(DESTDIR)$(PREFIX)/include/, $(header)))
+	$(RM) $(foreach header,$(HEADERS), \
+	    $(addprefix $(DESTDIR)$(PREFIX)/include/, $(header)))
 	-rmdir $(DESTDIR)$(PREFIX)/lib/
 	-rmdir $(DESTDIR)$(PREFIX)/include/
 	-rmdir $(DESTDIR)$(PREFIX)
