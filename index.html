@@ -327,7 +327,7 @@ $ LD_LIBRARY_PATH=. ./main
 <span class="Statement">bin_PROGRAMS </span>= hello
 <span class="Type">hello_SOURCES </span>= hello.c
 </pre>
-        <p>執行 <span class="red">autoscan</span> 產生 <span class="red">configuare.scan</span> 再修改成 <span class="red">configure.ac</span></p>
+        <p>執行 <span class="red">autoscan</span> 產生 <span class="red">configure.scan</span> 再修改成 <span class="red">configure.ac</span></p>
 <pre>
 AC_INIT([FULL-PACKAGE-NAME], [VERSION], [BUG-REPORT-ADDRESS])
          ￬                    ￬          ￬
@@ -412,7 +412,6 @@ $ find
 ./.libs/libhello_world.a
 ./.libs/libhello_world.so.0.0.0
 ./.libs/libhello_world.la
-./.libs/libhello_world.lai
 ./.libs/libhello_world.so
 ./.libs/libhello_world.so.0
 ./.libs/hello_world.o
@@ -528,7 +527,7 @@ AGE
 #      increment age.
 #   4. If any interfaces have been removed or changed since the last public
 #      release, then set age to 0.
-AC_SUBST([LT_VERSION],[9:3:1])
+AC_SUBST([LT_VERSION],[0:0:0])
 ...
 </pre>
         <p>Makefile.am</p>
@@ -541,31 +540,17 @@ libhello_world_la_LDFLAGS = -version-info $(LT_VERSION)
 
       <article class="smaller">
         <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
-        <p>-version-info 9:3:1 的結果</p>
+        <p>如果沒有動到API，那麼應該改成 -version-info 0:1:0 的結果。</p>
 <pre>
-$ find ./usr/
-./usr/
+$ find ./usr
+./usr
 ./usr/local
 ./usr/local/lib
 ./usr/local/lib/libhello_world.a
 ./usr/local/lib/libhello_world.la
-./usr/local/lib/libhello_world.so.8
-./usr/local/lib/libhello_world.so.8.1.3
 ./usr/local/lib/libhello_world.so
-./usr/local/include
-./usr/local/include/hello_world.h
-</pre>
-        <p>假設只是單純新增API，那麼應該改成 -version-info 10:0:2 的結果。</p>
-<pre>
-$ find ./usr/
-./usr/
-./usr/local
-./usr/local/lib
-./usr/local/lib/libhello_world.a
-./usr/local/lib/libhello_world.la
-./usr/local/lib/libhello_world.so.8
-./usr/local/lib/libhello_world.so
-./usr/local/lib/libhello_world.so.8.2.0
+./usr/local/lib/libhello_world.so.0
+./usr/local/lib/libhello_world.so.0.0.1
 ./usr/local/include
 ./usr/local/include/hello_world.h
 </pre>
@@ -573,7 +558,7 @@ $ find ./usr/
 
       <article class="smaller">
         <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
-        <p>-version-info 9:3:1 的結果</p>
+        <p>如果只是新增API，那麼應該改成 -version-info 1:0:1 的結果。</p>
 <pre>
 $ find ./usr/
 ./usr/
@@ -581,23 +566,9 @@ $ find ./usr/
 ./usr/local/lib
 ./usr/local/lib/libhello_world.a
 ./usr/local/lib/libhello_world.la
-./usr/local/lib/libhello_world.so.8
-./usr/local/lib/libhello_world.so.8.1.3
 ./usr/local/lib/libhello_world.so
-./usr/local/include
-./usr/local/include/hello_world.h
-</pre>
-        <p>假設完全沒有動到API，那麼應該改成 -version-info 9:4:1 的結果。</p>
-<pre>
-$ find ./usr/
-./usr/
-./usr/local
-./usr/local/lib
-./usr/local/lib/libhello_world.a
-./usr/local/lib/libhello_world.la
-./usr/local/lib/libhello_world.so.8
-./usr/local/lib/libhello_world.so.8.1.4
-./usr/local/lib/libhello_world.so
+./usr/local/lib/libhello_world.so.0
+./usr/local/lib/libhello_world.so.0.1.0
 ./usr/local/include
 ./usr/local/include/hello_world.h
 </pre>
@@ -605,7 +576,7 @@ $ find ./usr/
 
       <article class="smaller">
         <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
-        <p>-version-info 9:3:1 的結果</p>
+        <p>如果刪除或修改了API，那麼應該改成 -version-info 1:0:0 的結果。</p>
 <pre>
 $ find ./usr/
 ./usr/
@@ -613,23 +584,9 @@ $ find ./usr/
 ./usr/local/lib
 ./usr/local/lib/libhello_world.a
 ./usr/local/lib/libhello_world.la
-./usr/local/lib/libhello_world.so.8
-./usr/local/lib/libhello_world.so.8.1.3
 ./usr/local/lib/libhello_world.so
-./usr/local/include
-./usr/local/include/hello_world.h
-</pre>
-        <p>假設刪除或修改了API，那麼應該改成 -version-info 10:0:0 的結果。</p>
-<pre>
-$ find ./usr/
-./usr/
-./usr/local
-./usr/local/lib
-./usr/local/lib/libhello_world.a
-./usr/local/lib/libhello_world.so.10.0.0
-./usr/local/lib/libhello_world.la
-./usr/local/lib/libhello_world.so
-./usr/local/lib/libhello_world.so.10
+./usr/local/lib/libhello_world.so.1
+./usr/local/lib/libhello_world.so.1.0.0
 ./usr/local/include
 ./usr/local/include/hello_world.h
 </pre>
