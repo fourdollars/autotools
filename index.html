@@ -214,7 +214,7 @@
 <span class="PreProc">#ifndef __HELLO_WORLD__</span>
 <span class="PreProc">#define __HELLO_WORLD__</span>
 <span class="PreProc">#ifdef __cplusplus</span>
-<span class="Type">extern</span> <span class="Constant">&quot;C&quot;</span>
+<span class="Type">extern</span> <span class="Constant">&quot;C&quot;</span> <span class="Comment">/* Or using G_BEGIN_DECLS from &lt;glib.h&gt; <span class="Comment">*/</span>
 {
 <span class="PreProc">#endif</span>
     <span class="Comment">/*</span><span class="Comment">* </span>
@@ -222,9 +222,9 @@
 <span class="Comment">     * </span>
 <span class="Comment">     * @return The reture value of printf.</span>
 <span class="Comment">     </span><span class="Comment">*/</span>
-    <span class="Type">extern</span> <span class="Type">int</span> hello_world(<span class="Type">void</span>);
+    <span class="Type">int</span> hello_world(<span class="Type">void</span>);
 <span class="PreProc">#ifdef __cplusplus</span>
-}
+} <span class="Comment">/* Or using G_END_DECLS from &lt;glib.h&gt; <span class="Comment">*/</span>
 <span class="PreProc">#endif</span>
 <span class="PreProc">#endif</span>
 </pre>
@@ -370,6 +370,94 @@ $ ./configure
 $ make
 $ make install
 </pre>
+      </article>
+
+      <article class="smaller">
+        <h3>使用 <span class="green">Autotools</span> 的好處之一</h3>
+        <p>利用 <span class="red">DESTDIR</span> 安裝在指定目錄底下</p>
+<pre>
+$ export <span class="red">DESTDIR</span>=$PWD
+$ make install <span class="red">DESTDIR</span>=$PWD
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.so.0.0.0
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so
+./usr/local/lib/libhello_world.so.0
+./usr/local/include
+./usr/local/include/hello_world.h
+$ make uninstall <span class="red">DESTDIR</span>=$PWD
+...
+</pre>
+      </article>
+      <article class="smaller">
+        <h3>使用 <span class="green">Autotools</span> 的好處之二</h3>
+        <p>原始碼的編譯可以跟原始碼分開在不同的目錄</p>
+<pre>
+$ make <span class="red">distclean</span> # 要先清理一下原始碼目錄
+$ mkdir build &amp;&amp; cd build
+$ ../configure &amp;&amp; make
+$ find
+.
+./libtool
+./libhello_world.la
+./config.log
+./config.h
+./.deps
+./.deps/hello_world.Plo
+./.libs
+./.libs/libhello_world.a
+./.libs/libhello_world.so.0.0.0
+./.libs/libhello_world.la
+./.libs/libhello_world.lai
+./.libs/libhello_world.so
+./.libs/libhello_world.so.0
+./.libs/hello_world.o
+./config.status
+./hello_world.o
+./hello_world.lo
+./stamp-h1
+./Makefile
+</pre>
+      </article>
+
+      <article class="smaller">
+        <h3>使用 <span class="green">Autotools</span> 的好處之三</h3>
+        <p>不同類型的檔案可以安裝到各別指定的目錄底下</p>
+<pre>
+$ ../configure --prefix=/opt --libdir=/opt/superlib --includedir=/opt/exclude
+$ make &amp;&amp; make install DESTDIR=$PWD
+$ find ./opt/
+./opt/
+./opt/exclude
+./opt/exclude/hello_world.h
+./opt/superlib
+./opt/superlib/libhello_world.a
+./opt/superlib/libhello_world.so.0.0.0
+./opt/superlib/libhello_world.la
+./opt/superlib/libhello_world.so
+./opt/superlib/libhello_world.so.0
+$ ../configure --help
+...
+Installation directories:
+  --prefix=PREFIX         install architecture-independent files in PREFIX
+                          [/usr/local]
+  --exec-prefix=EPREFIX   install architecture-dependent files in EPREFIX
+                          [PREFIX]
+
+By default, `make install' will install all the files in
+`/usr/local/bin', `/usr/local/lib' etc.  You can specify
+an installation prefix other than `/usr/local' using `--prefix',
+for instance `--prefix=$HOME'.
+...
+</pre>
+      </article>
+
+      <article class="smaller">
+        <h3>使用 <span class="green">libtool</span> 的 <span class="red">Versioning</span> 函式庫版號</h3>
       </article>
 
       <article class="smaller">
