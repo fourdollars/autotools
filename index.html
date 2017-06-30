@@ -514,10 +514,133 @@ AGE
       </article>
 
       <article class="smaller">
+        <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
+        <p>configure.ac</p>
+<pre>
+...
+# Before making a release, the LT_VERSION string should be modified. The
+# string is of the form c:r:a. Follow these instructions sequentially:
+#   1. If the library source code has changed at all since the last update, then
+#      increment revision (‘c:r:a’ becomes ‘c:r+1:a’).
+#   2. If any interfaces have been added, removed, or changed since the last
+#      update, increment current, and set revision to 0.
+#   3. If any interfaces have been added since the last public release, then
+#      increment age.
+#   4. If any interfaces have been removed or changed since the last public
+#      release, then set age to 0.
+AC_SUBST([LT_VERSION],[9:3:1])
+...
+</pre>
+        <p>Makefile.am</p>
+<pre>
+...
+libhello_world_la_LDFLAGS = -version-info $(LT_VERSION)
+...
+</pre>
+      </article>
+
+      <article class="smaller">
+        <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
+        <p>-version-info 9:3:1 的結果</p>
+<pre>
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so.8
+./usr/local/lib/libhello_world.so.8.1.3
+./usr/local/lib/libhello_world.so
+./usr/local/include
+./usr/local/include/hello_world.h
+</pre>
+        <p>假設只是單純新增API，那麼應該改成 -version-info 10:0:2 的結果。</p>
+<pre>
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so.8
+./usr/local/lib/libhello_world.so
+./usr/local/lib/libhello_world.so.8.2.0
+./usr/local/include
+./usr/local/include/hello_world.h
+</pre>
+      </article>
+
+      <article class="smaller">
+        <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
+        <p>-version-info 9:3:1 的結果</p>
+<pre>
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so.8
+./usr/local/lib/libhello_world.so.8.1.3
+./usr/local/lib/libhello_world.so
+./usr/local/include
+./usr/local/include/hello_world.h
+</pre>
+        <p>假設完全沒有動到API，那麼應該改成 -version-info 9:4:1 的結果。</p>
+<pre>
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so.8
+./usr/local/lib/libhello_world.so.8.1.4
+./usr/local/lib/libhello_world.so
+./usr/local/include
+./usr/local/include/hello_world.h
+</pre>
+      </article>
+
+      <article class="smaller">
+        <h3><span class="green">libtool</span> 的 <span class="red">Versioning</span> 系統 (續)</h3>
+        <p>-version-info 9:3:1 的結果</p>
+<pre>
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so.8
+./usr/local/lib/libhello_world.so.8.1.3
+./usr/local/lib/libhello_world.so
+./usr/local/include
+./usr/local/include/hello_world.h
+</pre>
+        <p>假設刪除或修改了API，那麼應該改成 -version-info 10:0:0 的結果。</p>
+<pre>
+$ find ./usr/
+./usr/
+./usr/local
+./usr/local/lib
+./usr/local/lib/libhello_world.a
+./usr/local/lib/libhello_world.so.10.0.0
+./usr/local/lib/libhello_world.la
+./usr/local/lib/libhello_world.so
+./usr/local/lib/libhello_world.so.10
+./usr/local/include
+./usr/local/include/hello_world.h
+</pre>
+      </article>
+
+      <article class="smaller">
         <h3><span class="green">參考資料</span></h3> 
         <dl>
           <dt>線上文件</dt>
           <dd><a href="make.html">GNU Make Manual</a></dd>
+          <dd><a href="https://developer.gnome.org/programming-guidelines/stable/versioning.html">GNOME Developer Center - Programming Guidelines › Maintainer Guidelines » Versioning</a></dd>
         </dl>
         <dl>
           <dt>info</dt>
